@@ -1,16 +1,10 @@
 /*
  * 未加密的手势密码  与 加密后(des)的user id拼接，然后把拼接后的字符串用sha1加密,即为gesturePwd；
- * 事实上Des.java没有用到，因为修改密码不需要解密user id；
  * 这个程序运行的时候，切换到别的进程之后再切换回来，进程的root权限就已经丢失了，这个时候再修改密码是不行的，必须重新进入。
  * 需要配合支付宝8.1或更低版本使用。测试版本用的是8.1.0.043001
  * Larry 2014
  */
 package com.larry.alipaycracker;
-
-import jackpal.androidterm.Exec;
-
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -37,11 +31,11 @@ public class MainActivity extends Activity {
 	EditText etMyPwd;
 	Button btnOK;
 	
-	final int[] processId = new int[1];
-	final FileDescriptor fd = Exec.createSubprocess("/system/bin/sh", "-",
-			null, processId);
+//	final int[] processId = new int[1];
+//	final FileDescriptor fd = Exec.createSubprocess("/system/bin/sh", "-",
+//			null, processId);
 
-	final FileOutputStream out = new FileOutputStream(fd);
+//	final FileOutputStream out = new FileOutputStream(fd);
 
 	@SuppressLint("NewApi")
 	@Override
@@ -147,34 +141,30 @@ public class MainActivity extends Activity {
 	private String getUserId() throws Exception {
 		String szRet = "";
 		int USER_ID_INDEX = 4;
-
-		// 修改数据库文件的读写权限
-//		RootUtils
-//				.runRootCommand("chmod 666 /data/data/com.eg.android.AlipayGphone/databases/alipayclient.db");
-//		RootUtils
-//				.runRootCommand("chmod 666 /data/data/com.eg.android.AlipayGphone/databases/alipayclient.db-journal");
-
-		
-		//By Larry 修改读写权限
-		
 		try {
+			
+			// 修改数据库文件的读写权限
+			RootUtils
+					.runRootCommand("chmod 666 /data/data/com.eg.android.AlipayGphone/databases/alipayclient.db");
+			RootUtils
+					.runRootCommand("chmod 666 /data/data/com.eg.android.AlipayGphone/databases/alipayclient.db-journal");
 			
 			//run 「chmod 777 getroot」 and then run「getroot」immediately
 			
 			//question is , after runing this,how to start phase2 and copy su to system/bin? May 23,Larry
 			
-			String command = "su\n";//下面执行的时候也要用多个su？
-			out.write(command.getBytes());
-			out.flush();
-			command = "chmod 777 /data/data/com.eg.android.AlipayGphone/databases/alipayclient.db\n";
-			out.write(command.getBytes());
-			out.flush();
-			command = "su\n";//下面执行的时候也要用多个su？
-			out.write(command.getBytes());
-			out.flush();
-			command = "chmod 777 /data/data/com.eg.android.AlipayGphone/databases/alipayclient.db-journal";
-			out.write(command.getBytes());
-			out.flush();
+//			String command = "su\n";//下面执行的时候也要用多个su？
+//			out.write(command.getBytes());
+//			out.flush();
+//			command = "chmod 777 /data/data/com.eg.android.AlipayGphone/databases/alipayclient.db\n";
+//			out.write(command.getBytes());
+//			out.flush();
+//			command = "su\n";//下面执行的时候也要用多个su？
+//			out.write(command.getBytes());
+//			out.flush();
+//			command = "chmod 777 /data/data/com.eg.android.AlipayGphone/databases/alipayclient.db-journal";
+//			out.write(command.getBytes());
+//			out.flush();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			Log.e("chmod 777", ex.getMessage());
@@ -185,10 +175,6 @@ public class MainActivity extends Activity {
 			Context context = createPackageContext(
 					"com.eg.android.AlipayGphone",
 					Context.CONTEXT_IGNORE_SECURITY);
-			
-			String command = "su\n";
-			out.write(command.getBytes());
-			out.flush();
 			
 			SQLiteDatabase db = context.openOrCreateDatabase("alipayclient.db",
 					0, null);
@@ -217,10 +203,6 @@ public class MainActivity extends Activity {
 			Context context = createPackageContext(
 					"com.eg.android.AlipayGphone",
 					Context.CONTEXT_IGNORE_SECURITY);
-			
-			String command = "su\n";
-			out.write(command.getBytes());
-			out.flush();
 			
 			SQLiteDatabase db = context.openOrCreateDatabase("alipayclient.db",
 					0, null);
