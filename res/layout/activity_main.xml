@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding = "15dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <TextView
+        android:id = "@+id/textStatus"
+        android:layout_width="fill_parent"
+        android:layout_height = "wrap_content"
+        android:gravity = "center_horizontal"
+        android:text="[STATUS]"
+        />
+    <LinearLayout
+        android:id="@+id/layout01"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+         >
+
+        <TextView
+            android:id="@+id/etEncryptUseridText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="加密后的\nUserId" />
+
+        <EditText
+            android:id="@+id/editEncryptUserId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false" />
+    </LinearLayout>
+    
+    
+	<LinearLayout
+        android:id="@+id/layout02"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+         >
+        <TextView
+            android:id="@+id/editMyselfPwdText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="自定义密码" />
+
+        <EditText
+            android:id="@+id/editMyselfPwd"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+             />
+    </LinearLayout>
+
+	<Button
+	    android:id = "@+id/btnSetting"
+	    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="确认设置自定义密码" 
+	    />
+</LinearLayout>
